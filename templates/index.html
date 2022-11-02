@@ -9,9 +9,44 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-    body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
-    .w3-bar,h1,button {font-family: "Montserrat", sans-serif}
-    .fa-anchor,.fa-coffee {font-size:200px}
+        body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+        .w3-bar,h1,button {font-family: "Montserrat", sans-serif}
+        .fa-anchor,.fa-coffee {font-size:200px}
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            max-width: 300px;
+            margin: auto;
+            text-align: center;
+            font-family: arial;
+        }
+
+        .title {
+            color: grey;
+            font-size: 18px;
+        }
+
+        button {
+            border: none;
+            outline: 0;
+            display: inline-block;
+            padding: 8px;
+            color: white;
+            background-color: #000;
+            text-align: center;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+        }
+
+        a {
+            text-decoration: none;
+            font-size: 22px;
+            color: black;
+        }
+
+        button:hover, a:hover {
+            opacity: 0.7;
+        }
     </style>
 </head>
 <body>
@@ -39,7 +74,7 @@
     <!-- Header -->
     <header class="w3-container w3-red w3-center" style="padding:128px 16px" id="main">
         <h1 class="w3-margin w3-jumbo">Burtu spēle</h1>
-        <button class="w3-button w3-black w3-padding-large w3-large w3-margin-top">Spēlēt</button>
+        <button class="w3-button w3-black w3-padding-large w3-large w3-margin-top" href="#play">Spēlēt</button>
     </header>
 
     <!-- Spēle -->
@@ -57,7 +92,30 @@
     </div>
     <!--Autori-->
     <div class="w3-row-padding w3-light-grey w3-padding-64 w3-container" id="creators">
-        <p>Šeit būs Noteikumi</p>
+        <div class="card">
+            <!--<img src="/w3images/team2.jpg" alt="John" style="width:100%">!-->
+            <h1>Veronika Lohmanova</h1>
+            <p class="title">Programmētāja</p>
+            <p>Rīgas Valsts 1. ģimnāzija</p>
+            <div style="margin: 24px 0;">
+              <a href="#"><i class="fa fa-twitter"></i></a>  
+              <a href="#"><i class="fa fa-linkedin"></i></a>
+              <a href="https://github.com/fulcrum101"><i class="fa fa-github"></i></a>  
+            </div>
+            <p><button>Contact</button></p>
+        </div>
+        <div class="card">
+            <!--<img src="/w3images/team2.jpg" alt="John" style="width:100%">!-->
+            <h1>German Prudivus</h1>
+            <p class="title">Programmētājs</p>
+            <p>Rīgas Valsts 1. ģimnāzija</p>
+            <div style="margin: 24px 0;">
+              <a href="#"><i class="fa fa-twitter"></i></a>  
+              <a href="#"><i class="fa fa-linkedin"></i></a>
+              <a href="https://github.com/GermanPrudivus"><i class="fa fa-github"></i></a>  
+            </div>
+            <p><button>Contact</button></p>
+        </div>
     </div>
     <!-- Footer -->
     <footer class="w3-container w3-padding-64 w3-center w3-opacity">  
