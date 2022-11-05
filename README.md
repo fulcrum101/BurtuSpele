@@ -30,3 +30,4 @@ Par katru pareizi uzminēto burtu Jūs dabūsiet 1 punktu, par uzminētu vārdu,
 
 Spēles beigās ir iespējams saglābāt savu rezultātu un ielikt to kopējā rezultātu tabulā, kura ir redzama visiem lietotājiem.
 
+hello world
