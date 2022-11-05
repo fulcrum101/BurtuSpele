@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <style>
         body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
         .w3-bar,h1,button {font-family: "Montserrat", sans-serif}
@@ -79,40 +80,44 @@
 
     <!-- Spēle -->
     <div class="w3-row-padding w3-padding-64 w3-container" id="play">
-        <p>Šeit būs spēle.</p>
     </div>
 
     <!-- Noteikumi -->
     <div class="w3-row-padding w3-light-grey w3-padding-64 w3-container" id="rules">
-        <p>Šeit būs noteikumi.</p>
+        <h1><b>Noteikumi</b></h1>
+        <ul style="font-size: 1.5em">
+            <li>Spēle sastāv no desmit raundiem, kur katrā tiek izjaukts viens nejauši izvēlētais vārds, kurš jāsaliek kopā, lietojot dotos burtus.</li>
+            <li>Pirmajos trīs raundos jāsaliek vārdi, kuri sastāv no 4 burtiem. Otrajos trīs raundos ir vārdi, kuri sastāv jau no 5 burtiem. Trešajos trīs raundos vārdi sastāv jau no 6 burtiem, un beigu raundā ir vārds no 7 burtiem.</li>
+            <li>Katra raunda ilgums ir atkarīgs no burtu skaita vārdā: 4 burti – 30 sekundes, 5 burti – 45 sekundes, 6 burti – 90 sekundes un 7 burti – 120 sekundes. Maksimāli spēle ilgs 615 sekundes jeb 10 minūtes un 15 sekundes (ir arī iespēja pabeigt spēli ātrāk).</li>
+            <li>Par katru pareizi uzminēto burtu Jūs dabūsiet 1 punktu, par uzminētu vārdu, kurš sastāv no 4 burtiem tiks piešķirti 5 punkti, par vārdu no 5 burtiem – 7,5 punkti, par vārdu no 6 burtiem – 10 punkti un par vārdu no 7 burtiem – 15 punkti. Jums arī tiks piešķirti papildus 0,25 punkti par katru neizlietotu sekundi.</li>
+            <li>Spēles beigās ir iespējams saglābāt savu rezultātu un ielikt to kopējā rezultātu tabulā, kura ir redzama visiem lietotājiem.</li>
+        </ul>
     </div>
     <!--Rezultāti-->
     <div class="w3-row-padding w3-padding-64 w3-container" id="leaderboard">
         <p>Šeit būs rezultātu tabula.</p>
     </div>
     <!--Autori-->
-    <div class="w3-row-padding w3-light-grey w3-padding-64 w3-container" id="creators" style="vertical-align: middle">
-        <div class="card">
-            <!--<img src="/w3images/team2.jpg" alt="John" style="width:100%">!-->
+    <div class="w3-row-padding w3-light-grey w3-padding-64 w3-container" id="creators" style="display: flex; justify-content: center">
+        <div class="card" style="background: white">
             <h1>Veronika Lohmanova</h1>
             <p class="title">Programmētāja</p>
             <p>Rīgas Valsts 1. ģimnāzija</p>
             <div style="margin: 24px 0;">
-              <a href="#"><i class="fa fa-twitter"></i></a>  
-              <a href="#"><i class="fa fa-linkedin"></i></a>
-              <a href="https://github.com/fulcrum101"><i class="fa fa-github"></i></a>  
+                <a href="https://twitter.com/i_am_fulcrum"><i class="fa fa-twitter"></i></a>
+                <a href="https://www.linkedin.com/in/veronika-lohmanova-74b777234/"><i class="fa fa-linkedin"></i></a>
+                <a href="https://github.com/fulcrum101"><i class="fa fa-github"></i></a>
             </div>
             <p><button>Contact</button></p>
         </div>
-        <div class="card">
-            <!--<img src="/w3images/team2.jpg" alt="John" style="width:100%">!-->
+        <div class="card" style="background: white">
             <h1>German Prudivus</h1>
             <p class="title">Programmētājs</p>
             <p>Rīgas Valsts 1. ģimnāzija</p>
             <div style="margin: 24px 0;">
-              <a href="#"><i class="fa fa-twitter"></i></a>  
-              <a href="#"><i class="fa fa-linkedin"></i></a>
-              <a href="https://github.com/GermanPrudivus"><i class="fa fa-github"></i></a>  
+                <a href="https://twitter.com/g3rm1n_"><i class="fa fa-twitter"></i></a>
+                <a href="https://www.linkedin.com/in/german-prudivus-0b5395229/"><i class="fa fa-linkedin"></i></a>
+                <a href="https://github.com/GermanPrudivus"><i class="fa fa-github"></i></a>
             </div>
             <p><button>Contact</button></p>
         </div>
