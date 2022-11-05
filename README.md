@@ -29,5 +29,3 @@ Katra raunda ilgums ir atkarīgs no burtu skaita vārdā: 4 burti – 30 sekunde
 Par katru pareizi uzminēto burtu Jūs dabūsiet 1 punktu, par uzminētu vārdu, kurš sastāv no 4 burtiem tiks piešķirti 5 punkti, par vārdu no 5 burtiem – 7,5 punkti, par vārdu no 6 burtiem – 10 punkti un par vārdu no 7 burtiem – 15 punkti. Jums arī tiks piešķirti papildus 0,25 punkti par katru neizlietotu sekundi.
 
 Spēles beigās ir iespējams saglābāt savu rezultātu un ielikt to kopējā rezultātu tabulā, kura ir redzama visiem lietotājiem.
-
-hello world
