@@ -1,0 +1,22 @@
+[
+  {
+    "letter_count" : 4,
+    "round_count" : 3,
+    "time" : 30
+  },
+  {
+    "letter_count" : 5,
+    "round_count" : 3,
+    "time" : 45
+  },
+  {
+    "letter_count" : 6,
+    "round_count" : 3,
+    "time" : 90
+  },
+  {
+    "letter_count" : 7,
+    "round_count" : 1,
+    "time" : 120
+  }
+]

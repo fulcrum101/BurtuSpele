@@ -80,6 +80,7 @@
 
     <!-- Spēle -->
     <div class="w3-row-padding w3-padding-64 w3-container" id="play">
+        <button onclick="StartGame()">Sākt</button>
     </div>
 
     <!-- Noteikumi -->
@@ -136,6 +137,23 @@
             } else { 
                 x.className = x.className.replace(" w3-show", "");
             }
+        }
+        function PlayRound(letter_count, round_numb, time){
+            alert(String(letter_count) + " " + String(round_numb) + " " + String(time));
+        }
+        function StartGame(){
+            // get rules
+            fetch('http://127.0.0.1:5000/get_rules')
+            .then(response => response.json())
+            .then(dati => {
+                    let round_numb = 1;
+                    for (let x of dati){
+                        for (let i = 0; i < x['round_count']; i++){
+                            PlayRound(x['letter_count'], round_numb, x['time']);
+                            round_numb++;
+                        }
+                    }
+            })
         }
     </script>
 </body>
