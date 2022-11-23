@@ -80,7 +80,7 @@
 
     <!-- Spēle -->
     <div class="w3-row-padding w3-padding-64 w3-container" id="play">
-        <button onclick="StartGame()">Sākt</button>
+        <button onclick="StartGame()" id="start">Sākt</button>
     </div>
 
     <!-- Noteikumi -->
@@ -129,6 +129,12 @@
     </footer>
 
     <script>
+        let Time = 0;
+        let Timer = null;
+        let response;
+        let dati;
+        let round_numb = 0;
+        let word;
         // Used to toggle the menu on small screens when clicking on the menu button
         function myFunction() {
             var x = document.getElementById("navDemo");
@@ -138,22 +144,136 @@
                 x.className = x.className.replace(" w3-show", "");
             }
         }
-        function PlayRound(letter_count, round_numb, time){
-            alert(String(letter_count) + " " + String(round_numb) + " " + String(time));
-        }
-        function StartGame(){
-            // get rules
-            fetch('http://127.0.0.1:5000/get_rules')
+        async function GetWord(letter_count){
+            await fetch('http://127.0.0.1:5000/get_word?length=' + String(letter_count))
             .then(response => response.json())
             .then(dati => {
-                    let round_numb = 1;
-                    for (let x of dati){
-                        for (let i = 0; i < x['round_count']; i++){
-                            PlayRound(x['letter_count'], round_numb, x['time']);
-                            round_numb++;
-                        }
+                word = eval(dati)[0];
+            });
+            return await word;
+        }
+        function getRandomInt(n) {
+            return Math.floor(Math.random() * n);
+        }
+        function shuffle(s) {
+            let arr = s.split('');           // Convert String to array
+            let n = arr.length;              // Length of the array
+            for(let i=0 ; i<n-1 ; ++i) {
+                let j = getRandomInt(n);       // Get random of [0, n-1]
+                let temp = arr[i];             // Swap arr[i] and arr[j]
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+            s = arr.join('');                // Convert Array to string
+            return s;                        // Return shuffled string
+        }
+        async function EndRound() {
+            let guessed_word = "";
+            let el = document.getElementById('row_void');
+            for (let x of el.children) {
+                guessed_word += x.innerHTML;
+            }
+            if (Time === 0) {
+                if (guessed_word !== word) { // Word is not guessed on time
+                    el = document.getElementById("play");
+                    el.replaceChildren();
+                    alert("You lost!")
+                    clearInterval(Timer);
+                } else { // Word is guessed on time
+                    round_numb++;
+                    await PlayRound(dati[round_numb]['letter_count'], round_numb, dati[round_numb]['time']);
+                }
+            } else {
+                if (guessed_word === word) {
+                    alert("You won!");
+                    round_numb++;
+                    await PlayRound(dati[round_numb]['letter_count'], round_numb, dati[round_numb]['time']);
+                } else {
+                    let void_row = document.getElementById("row_void");
+                    for (let x of void_row.children) {
+                        x.innerHTML = " ";
                     }
-            })
+                }
+            }
+        }
+        async function PlayRound(letter_count, round_numb, time) {
+            word = await GetWord(letter_count);
+            console.log(word);
+            let ind = 0;
+            //alert(word);
+
+            //
+            let info = document.createElement('div');
+            info.id="info";
+            info.className="card";
+            info.style="display: flex; justify-content: center";
+            let timer = document.createElement('h3');
+            timer.id = "countdown";
+            let h = document.createElement("h3");
+            h.innerHTML = "Round " + String(round_numb+1);
+            info.appendChild(h);
+            info.appendChild(timer);
+            //
+            let row_void = document.createElement('div');
+            row_void.style = "display: flex; justify-content: center";
+            row_void.id = "row_void";
+            for (let i = 0; i < word.length; i++){
+                let letter_card = document.createElement('div');
+                letter_card.id="void_"+String(i);
+                letter_card.className = "card";
+                let letter = document.createElement('h1');
+                letter.id = "void_letter_" + String(i);
+                letter.innerHTML = " ";
+                letter_card.appendChild(letter);
+                row_void.appendChild(letter_card);
+            }
+            //
+            let row = document.createElement('div');
+            row.id="row";
+            row.style = "display: flex; justify-content: center";
+            let word_shuffled = shuffle(word);
+            for (let i = 0; i < word_shuffled.length; i++){
+                let letter_card = document.createElement('div');
+                letter_card.className = "card";
+                letter_card.id = "letter_" + String(i);
+                let letter = document.createElement('h1');
+                letter.innerHTML = word_shuffled[i];
+                letter_card.appendChild(letter);
+                letter_card.onclick = function (){
+                    let el = document.getElementById("void_"+String(ind));
+                    el.innerHTML = word_shuffled[i];
+                    ind++;
+                    if (ind === letter_count){
+                        EndRound();
+                    }
+                };
+                row.appendChild(letter_card);
+            }
+            //
+            let play_section = document.getElementById("play");
+            play_section.appendChild(info);
+            play_section.appendChild(row);
+            play_section.appendChild(row_void);
+            //
+            Timer = setInterval(function () {
+                if (time <= 0) {
+                    clearInterval(Timer);
+                    document.getElementById("countdown").innerHTML = "Finished";
+                    EndRound();
+                } else {
+                    document.getElementById("countdown").innerHTML = time + " seconds remaining";
+                    Time = time;
+                }
+                time -= 1;
+            }, 1000);
+        }
+        async function StartGame(){
+            // get rules
+            let response = await fetch('http://127.0.0.1:5000/get_rules');
+            let dati = await response.json();
+            let start_button= document.getElementById("start");
+            start_button.parentNode.removeChild(start_button);
+            await PlayRound(dati[0]['letter_count'], round_numb, dati[0]['time']);
         }
     </script>
 </body>
