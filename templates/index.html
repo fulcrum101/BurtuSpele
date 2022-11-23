@@ -10,9 +10,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <style>
-        body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
-        .w3-bar,h1,button {font-family: "Montserrat", sans-serif}
-        .fa-anchor,.fa-coffee {font-size:200px}
+        body, h1, h2, h3, h4, h5, h6 {
+            font-family: "Lato", sans-serif
+        }
+
+        .w3-bar, h1, button {
+            font-family: "Montserrat", sans-serif
+        }
+
+        .fa-anchor, .fa-coffee {
+            font-size: 200px
+        }
+
         .card {
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
             max-width: 300px;
@@ -51,231 +60,268 @@
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <div class="w3-top">
-        <div class="w3-bar w3-red w3-card w3-left-align w3-large">
-            <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
-            <a href="#main" class="w3-bar-item w3-button w3-padding-large w3-white">Galvēnā</a>
-            <a href="#play" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Spēlēt</a>
-            <a href="#rules" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Noteikumi</a>
-            <a href="#leaderboard" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Rezultāti</a>
-            <a href="#creators" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Autori</a>
+<!-- Navbar -->
+<div class="w3-top">
+    <div class="w3-bar w3-red w3-card w3-left-align w3-large">
+        <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red"
+           href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i
+                class="fa fa-bars"></i></a>
+        <a href="#main" class="w3-bar-item w3-button w3-padding-large w3-white">Galvēnā</a>
+        <a href="#play" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Spēlēt</a>
+        <a href="#rules" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Noteikumi</a>
+        <a href="#leaderboard" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Rezultāti</a>
+        <a href="#creators" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Autori</a>
+    </div>
+
+    <!-- Navbar on small screens -->
+    <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+        <a href="#main" class="w3-bar-item w3-button w3-padding-large">Galvēnā</a>
+        <a href="#play" class="w3-bar-item w3-button w3-padding-large">Spēlēt</a>
+        <a href="#rules" class="w3-bar-item w3-button w3-padding-large">Noteikumi</a>
+        <a href="#leaderboard" class="w3-bar-item w3-button w3-padding-large">Rezultāti</a>
+        <a href="#creators" class="w3-bar-item w3-button w3-padding-large">Autori</a>
+    </div>
+</div>
+
+<!-- Header -->
+<header class="w3-container w3-red w3-center" style="padding:128px 16px" id="main">
+    <h1 class="w3-margin w3-jumbo">Burtu spēle</h1>
+    <button class="w3-button w3-black w3-padding-large w3-large w3-margin-top" href="#play">Spēlēt</button>
+</header>
+
+<!-- Spēle -->
+<div class="w3-row-padding w3-padding-64 w3-container" id="play">
+    <button onclick="StartGame()" id="start">Sākt</button>
+</div>
+
+<!-- Noteikumi -->
+<div class="w3-row-padding w3-light-grey w3-padding-64 w3-container" id="rules">
+    <h1><b>Noteikumi</b></h1>
+    <ul style="font-size: 1.5em">
+        <li>Spēle sastāv no desmit raundiem, kur katrā tiek izjaukts viens nejauši izvēlētais vārds, kurš jāsaliek kopā,
+            lietojot dotos burtus.
+        </li>
+        <li>Pirmajos trīs raundos jāsaliek vārdi, kuri sastāv no 4 burtiem. Otrajos trīs raundos ir vārdi, kuri sastāv
+            jau no 5 burtiem. Trešajos trīs raundos vārdi sastāv jau no 6 burtiem, un beigu raundā ir vārds no 7
+            burtiem.
+        </li>
+        <li>Katra raunda ilgums ir atkarīgs no burtu skaita vārdā: 4 burti – 30 sekundes, 5 burti – 45 sekundes, 6 burti
+            – 90 sekundes un 7 burti – 120 sekundes. Maksimāli spēle ilgs 615 sekundes jeb 10 minūtes un 15 sekundes (ir
+            arī iespēja pabeigt spēli ātrāk).
+        </li>
+        <li>Par katru pareizi uzminēto burtu Jūs dabūsiet 1 punktu, par uzminētu vārdu, kurš sastāv no 4 burtiem tiks
+            piešķirti 5 punkti, par vārdu no 5 burtiem – 7,5 punkti, par vārdu no 6 burtiem – 10 punkti un par vārdu no
+            7 burtiem – 15 punkti. Jums arī tiks piešķirti papildus 0,25 punkti par katru neizlietotu sekundi.
+        </li>
+        <li>Spēles beigās ir iespējams saglābāt savu rezultātu un ielikt to kopējā rezultātu tabulā, kura ir redzama
+            visiem lietotājiem.
+        </li>
+    </ul>
+</div>
+<!--Rezultāti-->
+<div class="w3-row-padding w3-padding-64 w3-container" id="leaderboard">
+    <p>Šeit būs rezultātu tabula.</p>
+</div>
+<!--Autori-->
+<div class="w3-row-padding w3-light-grey w3-padding-64 w3-container" id="creators"
+     style="display: flex; justify-content: center">
+    <div class="card" style="background: white">
+        <h1>Veronika Lohmanova</h1>
+        <p class="title">Programmētāja</p>
+        <p>Rīgas Valsts 1. ģimnāzija</p>
+        <div style="margin: 24px 0;">
+            <a href="https://twitter.com/i_am_fulcrum"><i class="fa fa-twitter"></i></a>
+            <a href="https://www.linkedin.com/in/veronika-lohmanova-74b777234/"><i class="fa fa-linkedin"></i></a>
+            <a href="https://github.com/fulcrum101"><i class="fa fa-github"></i></a>
         </div>
-
-        <!-- Navbar on small screens -->
-        <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
-            <a href="#main" class="w3-bar-item w3-button w3-padding-large">Galvēnā</a>
-            <a href="#play" class="w3-bar-item w3-button w3-padding-large">Spēlēt</a>
-            <a href="#rules" class="w3-bar-item w3-button w3-padding-large">Noteikumi</a>
-            <a href="#leaderboard" class="w3-bar-item w3-button w3-padding-large">Rezultāti</a>
-            <a href="#creators" class="w3-bar-item w3-button w3-padding-large">Autori</a>
+        <p>
+            <button>Contact</button>
+        </p>
+    </div>
+    <div class="card" style="background: white">
+        <h1>German Prudivus</h1>
+        <p class="title">Programmētājs</p>
+        <p>Rīgas Valsts 1. ģimnāzija</p>
+        <div style="margin: 24px 0;">
+            <a href="https://twitter.com/g3rm1n_"><i class="fa fa-twitter"></i></a>
+            <a href="https://www.linkedin.com/in/german-prudivus-0b5395229/"><i class="fa fa-linkedin"></i></a>
+            <a href="https://github.com/GermanPrudivus"><i class="fa fa-github"></i></a>
         </div>
+        <p>
+            <button>Contact</button>
+        </p>
     </div>
+</div>
+<!-- Footer -->
+<footer class="w3-container w3-padding-64 w3-center w3-opacity">
+    <div class="w3-xlarge w3-padding-32"></div>
+</footer>
 
-    <!-- Header -->
-    <header class="w3-container w3-red w3-center" style="padding:128px 16px" id="main">
-        <h1 class="w3-margin w3-jumbo">Burtu spēle</h1>
-        <button class="w3-button w3-black w3-padding-large w3-large w3-margin-top" href="#play">Spēlēt</button>
-    </header>
+<script>
+    let Time = 0;
+    let Timer = null;
+    let response;
+    let dati;
+    let round_numb = 0;
+    let word_shuffled;
 
-    <!-- Spēle -->
-    <div class="w3-row-padding w3-padding-64 w3-container" id="play">
-        <button onclick="StartGame()" id="start">Sākt</button>
-    </div>
-
-    <!-- Noteikumi -->
-    <div class="w3-row-padding w3-light-grey w3-padding-64 w3-container" id="rules">
-        <h1><b>Noteikumi</b></h1>
-        <ul style="font-size: 1.5em">
-            <li>Spēle sastāv no desmit raundiem, kur katrā tiek izjaukts viens nejauši izvēlētais vārds, kurš jāsaliek kopā, lietojot dotos burtus.</li>
-            <li>Pirmajos trīs raundos jāsaliek vārdi, kuri sastāv no 4 burtiem. Otrajos trīs raundos ir vārdi, kuri sastāv jau no 5 burtiem. Trešajos trīs raundos vārdi sastāv jau no 6 burtiem, un beigu raundā ir vārds no 7 burtiem.</li>
-            <li>Katra raunda ilgums ir atkarīgs no burtu skaita vārdā: 4 burti – 30 sekundes, 5 burti – 45 sekundes, 6 burti – 90 sekundes un 7 burti – 120 sekundes. Maksimāli spēle ilgs 615 sekundes jeb 10 minūtes un 15 sekundes (ir arī iespēja pabeigt spēli ātrāk).</li>
-            <li>Par katru pareizi uzminēto burtu Jūs dabūsiet 1 punktu, par uzminētu vārdu, kurš sastāv no 4 burtiem tiks piešķirti 5 punkti, par vārdu no 5 burtiem – 7,5 punkti, par vārdu no 6 burtiem – 10 punkti un par vārdu no 7 burtiem – 15 punkti. Jums arī tiks piešķirti papildus 0,25 punkti par katru neizlietotu sekundi.</li>
-            <li>Spēles beigās ir iespējams saglābāt savu rezultātu un ielikt to kopējā rezultātu tabulā, kura ir redzama visiem lietotājiem.</li>
-        </ul>
-    </div>
-    <!--Rezultāti-->
-    <div class="w3-row-padding w3-padding-64 w3-container" id="leaderboard">
-        <p>Šeit būs rezultātu tabula.</p>
-    </div>
-    <!--Autori-->
-    <div class="w3-row-padding w3-light-grey w3-padding-64 w3-container" id="creators" style="display: flex; justify-content: center">
-        <div class="card" style="background: white">
-            <h1>Veronika Lohmanova</h1>
-            <p class="title">Programmētāja</p>
-            <p>Rīgas Valsts 1. ģimnāzija</p>
-            <div style="margin: 24px 0;">
-                <a href="https://twitter.com/i_am_fulcrum"><i class="fa fa-twitter"></i></a>
-                <a href="https://www.linkedin.com/in/veronika-lohmanova-74b777234/"><i class="fa fa-linkedin"></i></a>
-                <a href="https://github.com/fulcrum101"><i class="fa fa-github"></i></a>
-            </div>
-            <p><button>Contact</button></p>
-        </div>
-        <div class="card" style="background: white">
-            <h1>German Prudivus</h1>
-            <p class="title">Programmētājs</p>
-            <p>Rīgas Valsts 1. ģimnāzija</p>
-            <div style="margin: 24px 0;">
-                <a href="https://twitter.com/g3rm1n_"><i class="fa fa-twitter"></i></a>
-                <a href="https://www.linkedin.com/in/german-prudivus-0b5395229/"><i class="fa fa-linkedin"></i></a>
-                <a href="https://github.com/GermanPrudivus"><i class="fa fa-github"></i></a>
-            </div>
-            <p><button>Contact</button></p>
-        </div>
-    </div>
-    <!-- Footer -->
-    <footer class="w3-container w3-padding-64 w3-center w3-opacity">  
-        <div class="w3-xlarge w3-padding-32"></div>
-    </footer>
-
-    <script>
-        let Time = 0;
-        let Timer = null;
-        let response;
-        let dati;
-        let round_numb = 0;
-        let word;
-        // Used to toggle the menu on small screens when clicking on the menu button
-        function myFunction() {
-            var x = document.getElementById("navDemo");
-            if (x.className.indexOf("w3-show") == -1) {
-                x.className += " w3-show";
-            } else { 
-                x.className = x.className.replace(" w3-show", "");
+    function GetRound(){
+        let ind = 0;
+        for (let i = 0; i < dati.length; i++){
+            let c = dati[i]["round_count"];
+            for (let x = 0; x < c; x++){
+                ind++;
+                if (ind === round_numb){
+                    return i;
+                }
             }
         }
-        async function GetWord(letter_count){
-            await fetch('http://127.0.0.1:5000/get_word?length=' + String(letter_count))
+    }
+
+    // Used to toggle the menu on small screens when clicking on the menu button
+    function myFunction() {
+        var x = document.getElementById("navDemo");
+        if (x.className.indexOf("w3-show") == -1) {
+            x.className += " w3-show";
+        } else {
+            x.className = x.className.replace(" w3-show", "");
+        }
+    }
+    async function GetWord(letter_count) {
+        await fetch('http://127.0.0.1:5000/get_word?length=' + String(letter_count))
             .then(response => response.json())
             .then(dati => {
                 word = eval(dati)[0];
             });
-            return await word;
+        return await word;
+    }
+    function getRandomInt(n) {
+        return Math.floor(Math.random() * n);
+    }
+    function shuffle(s) {
+        let arr = s.split('');           // Convert String to array
+        let n = arr.length;              // Length of the array
+        for (let i = 0; i < n - 1; ++i) {
+            let j = getRandomInt(n);       // Get random of [0, n-1]
+            let temp = arr[i];             // Swap arr[i] and arr[j]
+            arr[i] = arr[j];
+            arr[j] = temp;
         }
-        function getRandomInt(n) {
-            return Math.floor(Math.random() * n);
-        }
-        function shuffle(s) {
-            let arr = s.split('');           // Convert String to array
-            let n = arr.length;              // Length of the array
-            for(let i=0 ; i<n-1 ; ++i) {
-                let j = getRandomInt(n);       // Get random of [0, n-1]
-                let temp = arr[i];             // Swap arr[i] and arr[j]
-                arr[i] = arr[j];
-                arr[j] = temp;
-            }
-            s = arr.join('');                // Convert Array to string
-            return s;                        // Return shuffled string
-        }
-        async function EndRound() {
-            let guessed_word = "";
-            let el = document.getElementById('row_void');
-            for (let x of el.children) {
-                guessed_word += x.innerHTML;
-            }
-            if (Time === 0) {
-                if (guessed_word !== word) { // Word is not guessed on time
-                    el = document.getElementById("play");
-                    el.replaceChildren();
-                    alert("You lost!")
-                    clearInterval(Timer);
-                } else { // Word is guessed on time
-                    round_numb++;
-                    await PlayRound(dati[round_numb]['letter_count'], round_numb, dati[round_numb]['time']);
-                }
-            } else {
-                if (guessed_word === word) {
-                    alert("You won!");
-                    round_numb++;
-                    await PlayRound(dati[round_numb]['letter_count'], round_numb, dati[round_numb]['time']);
-                } else {
-                    let void_row = document.getElementById("row_void");
-                    for (let x of void_row.children) {
-                        x.innerHTML = " ";
-                    }
-                }
-            }
-        }
-        async function PlayRound(letter_count, round_numb, time) {
-            word = await GetWord(letter_count);
-            console.log(word);
-            let ind = 0;
-            //alert(word);
+        s = arr.join('');                // Convert Array to string
+        return s;                        // Return shuffled string
+    }
 
-            //
-            let info = document.createElement('div');
-            info.id="info";
-            info.className="card";
-            info.style="display: flex; justify-content: center";
-            let timer = document.createElement('h3');
-            timer.id = "countdown";
-            let h = document.createElement("h3");
-            h.innerHTML = "Round " + String(round_numb+1);
-            info.appendChild(h);
-            info.appendChild(timer);
-            //
-            let row_void = document.createElement('div');
-            row_void.style = "display: flex; justify-content: center";
-            row_void.id = "row_void";
-            for (let i = 0; i < word.length; i++){
-                let letter_card = document.createElement('div');
-                letter_card.id="void_"+String(i);
-                letter_card.className = "card";
-                let letter = document.createElement('h1');
-                letter.id = "void_letter_" + String(i);
-                letter.innerHTML = " ";
-                letter_card.appendChild(letter);
-                row_void.appendChild(letter_card);
-            }
-            //
-            let row = document.createElement('div');
-            row.id="row";
-            row.style = "display: flex; justify-content: center";
-            let word_shuffled = shuffle(word);
-            for (let i = 0; i < word_shuffled.length; i++){
-                let letter_card = document.createElement('div');
-                letter_card.className = "card";
-                letter_card.id = "letter_" + String(i);
-                let letter = document.createElement('h1');
-                letter.innerHTML = word_shuffled[i];
-                letter_card.appendChild(letter);
-                letter_card.onclick = function (){
-                    let el = document.getElementById("void_"+String(ind));
-                    el.innerHTML = word_shuffled[i];
-                    ind++;
-                    if (ind === letter_count){
-                        EndRound();
-                    }
-                };
-                row.appendChild(letter_card);
-            }
-            //
-            let play_section = document.getElementById("play");
-            play_section.appendChild(info);
-            play_section.appendChild(row);
-            play_section.appendChild(row_void);
-            //
-            Timer = setInterval(function () {
-                if (time <= 0) {
-                    clearInterval(Timer);
-                    document.getElementById("countdown").innerHTML = "Finished";
-                    EndRound();
-                } else {
-                    document.getElementById("countdown").innerHTML = time + " seconds remaining";
-                    Time = time;
+    async function EndRound() {
+        let guessed_word = "";
+        let el = document.getElementById('row_void');
+        for (let x of el.children) {
+            guessed_word += x.innerHTML;
+        }
+
+        if (guessed_word === word) {
+            el = document.getElementById("play");
+            el.replaceChildren();
+            clearInterval(Timer);
+            round_numb++;
+            // TODO Check if round is last
+            await PlayRound(dati[GetRound(round_numb)]['letter_count'], round_numb, dati[GetRound(round_numb)]['time']);
+        } else{
+            if (Time === 0) {
+                el = document.getElementById("play");
+                el.replaceChildren();
+                alert("You lost!")
+                clearInterval(Timer);
+            } else {
+                let void_row = document.getElementById("row_void");
+                for (let x of void_row.children) {
+                    x.innerHTML = " ";
                 }
-                time -= 1;
-            }, 1000);
+            }
         }
-        async function StartGame(){
-            // get rules
-            let response = await fetch('http://127.0.0.1:5000/get_rules');
-            let dati = await response.json();
-            let start_button= document.getElementById("start");
-            start_button.parentNode.removeChild(start_button);
-            await PlayRound(dati[0]['letter_count'], round_numb, dati[0]['time']);
+    }
+
+    async function PlayRound(letter_count, round_numb, time) {
+        word = await GetWord(letter_count);
+        console.log(word);
+        let ind = 0;
+        //alert(word);
+
+        //
+        let info = document.createElement('div');
+        info.id = "info";
+        info.className = "card";
+        info.style = "display: flex; justify-content: center";
+        let timer = document.createElement('h3');
+        timer.id = "countdown";
+        let h = document.createElement("h3");
+        h.innerHTML = "Round " + String(round_numb + 1);
+        info.appendChild(h);
+        info.appendChild(timer);
+        //
+        let row_void = document.createElement('div');
+        row_void.style = "display: flex; justify-content: center";
+        row_void.id = "row_void";
+        for (let i = 0; i < word.length; i++) {
+            let letter_card = document.createElement('div');
+            letter_card.id = "void_" + String(i);
+            letter_card.className = "card";
+            let letter = document.createElement('h1');
+            letter.id = "void_letter_" + String(i);
+            letter.innerHTML = " ";
+            letter_card.appendChild(letter);
+            row_void.appendChild(letter_card);
         }
-    </script>
+        //
+        let row = document.createElement('div');
+        row.id = "row";
+        row.style = "display: flex; justify-content: center";
+        word_shuffled = shuffle(word);
+        for (let i = 0; i < word_shuffled.length; i++) {
+            let letter_card = document.createElement('div');
+            letter_card.className = "card";
+            letter_card.id = "letter_" + String(i);
+            let letter = document.createElement('h1');
+            letter.innerHTML = word_shuffled[i];
+            letter_card.appendChild(letter);
+            letter_card.onclick = function () {
+                let el = document.getElementById("void_" + String(ind));
+                el.innerHTML = letter.innerHTML;
+                ind++;
+                if (ind === letter_count) {
+                    EndRound();
+                    ind = 0;
+                }
+            };
+            row.appendChild(letter_card);
+        }
+        //
+        let play_section = document.getElementById("play");
+        play_section.appendChild(info);
+        play_section.appendChild(row);
+        play_section.appendChild(row_void);
+        //
+        Timer = setInterval(function () {
+            if (time <= 0) {
+                clearInterval(Timer);
+                document.getElementById("countdown").innerHTML = "Finished";
+                EndRound();
+            } else {
+                document.getElementById("countdown").innerHTML = time + " seconds remaining";
+                Time = time;
+            }
+            time -= 1;
+        }, 1000);
+    }
+    async function StartGame() {
+        // get rules
+        response = await fetch('http://127.0.0.1:5000/get_rules');
+        dati = await response.json();
+        console.log(response, dati);
+        let start_button = document.getElementById("start");
+        start_button.parentNode.removeChild(start_button);
+        await PlayRound(dati[0]['letter_count'], round_numb, dati[0]['time']);
+    }
+</script>
 </body>
 </html>
 
