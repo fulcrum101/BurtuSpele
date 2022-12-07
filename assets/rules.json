@@ -2,21 +2,25 @@
   {
     "letter_count" : 4,
     "round_count" : 3,
-    "time" : 30
+    "time" : 30,
+    "points" : 5
   },
   {
     "letter_count" : 5,
     "round_count" : 3,
-    "time" : 45
+    "time" : 45,
+    "points" : 7.5
   },
   {
     "letter_count" : 6,
     "round_count" : 3,
-    "time" : 90
+    "time" : 90,
+    "points" : 10
   },
   {
     "letter_count" : 7,
     "round_count" : 1,
-    "time" : 120
+    "time" : 120,
+    "points" : 15
   }
 ]

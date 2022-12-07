@@ -123,8 +123,7 @@
     <p>Šeit būs rezultātu tabula.</p>
 </div>
 <!--Autori-->
-<div class="w3-row-padding w3-light-grey w3-padding-64 w3-container" id="creators"
-     style="display: flex; justify-content: center">
+<div class="w3-row-padding w3-light-grey w3-padding-64 w3-container" id="creators" style="display: flex; justify-content: center">
     <div class="card" style="background: white">
         <h1>Veronika Lohmanova</h1>
         <p class="title">Programmētāja</p>
@@ -164,8 +163,14 @@
     let dati;
     let round_numb = 0;
     let word_shuffled;
+    let ROUND_SUM = 10;
+    let SCORE = 0;
+    let ST = 0;
 
     function GetRound(){
+        if (round_numb === 0){
+            return 0;
+        }
         let ind = 0;
         for (let i = 0; i < dati.length; i++){
             let c = dati[i]["round_count"];
@@ -210,27 +215,93 @@
         s = arr.join('');                // Convert Array to string
         return s;                        // Return shuffled string
     }
+    function EndGame(){
+        let el = document.getElementById("play");
+        let h = document.createElement('h3');
+        h.innerHTML = "Your score is: " + String(SCORE);
+        el.appendChild(h);
+        form = document.createElement('form')
+        form.id = "forma";
+        form.onsubmit="return false";
+        let inp = document.createElement('input');
+        inp.type="text";
+        inp.name="vards";
+        form.appendChild(inp);
+        let butt = document.createElement("button");
+        butt.onclick = "fetchLB()";
+        butt.innerHTML = "submit";
+        form.appendChild(butt);
+        el.appendChild(form);
+    }
+    function GenerateLeaderBoard(dati){
+            if(document.getElementById('LB')){
+                document.getElementById('LB').remove();
+            }
+            var LB = document.createElement('table');
+            LB.id = 'LB'
+            //
+            var t1 = document.createElement('tr');
+            h1 = document.createElement('th');
+            h1.innerHTML = 'Username';
+            t1.appendChild(h1);
+            h2 = document.createElement('th');
+            h2.innerHTML = 'Points';
+            t1.appendChild(h2);
+            LB.appendChild(t1);
+            for (x of dati){
+                row = document.createElement('tr');
+                d1 = document.createElement('td');
+                d1.innerHTML = x['name'];
+                row.appendChild(d1);
+                d2 = document.createElement('td');
+                d2.innerHTML = x['points'];
+                row.appendChild(d2);
+                LB.appendChild(row);
+            }
+            document.body.appendChild(LB);
+        }
 
+        function fetchLB(){
+            let vards=document.getElementById("forma").vards.value;
+            if (!(vards === null || vards === '')){
+                fetch('http://127.0.0.1:5000/lb', {
+                    method: 'POST',
+                    headers: {'Content-Type' : 'application/json'},
+                    body:JSON.stringify({'name' : vards, 'points' : Math.floor(Math.random() * 100)})
+                })
+                .then(res => res.json())
+                .then(data => GenerateLeaderBoard(data));
+            } else {
+                fetch('http://127.0.0.1:5000/lb')
+                .then(res => res.json())
+                .then(data => GenerateLeaderBoard(data));
+            }
+
+        }
     async function EndRound() {
         let guessed_word = "";
         let el = document.getElementById('row_void');
         for (let x of el.children) {
             guessed_word += x.innerHTML;
         }
-
         if (guessed_word === word) {
+            SCORE += dati[GetRound(round_numb)];
+            SCORE += ST;
             el = document.getElementById("play");
             el.replaceChildren();
             clearInterval(Timer);
-            round_numb++;
-            // TODO Check if round is last
-            await PlayRound(dati[GetRound(round_numb)]['letter_count'], round_numb, dati[GetRound(round_numb)]['time']);
-        } else{
+            if (round_numb >= ROUND_SUM - 1) {
+                EndGame();
+            } else {
+                round_numb++;
+                await PlayRound(dati[GetRound(round_numb)]['letter_count'], round_numb, dati[GetRound(round_numb)]['time']);
+            }
+        } else {
             if (Time === 0) {
                 el = document.getElementById("play");
                 el.replaceChildren();
-                alert("You lost!")
                 clearInterval(Timer);
+                EndGame();
             } else {
                 let void_row = document.getElementById("row_void");
                 for (let x of void_row.children) {
@@ -300,6 +371,7 @@
         play_section.appendChild(row);
         play_section.appendChild(row_void);
         //
+        ST = 0.25*time;
         Timer = setInterval(function () {
             if (time <= 0) {
                 clearInterval(Timer);
@@ -308,6 +380,8 @@
             } else {
                 document.getElementById("countdown").innerHTML = time + " seconds remaining";
                 Time = time;
+                ST -= 0.25
+
             }
             time -= 1;
         }, 1000);
