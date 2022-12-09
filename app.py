@@ -1,9 +1,9 @@
-import json
-import requests
+import json, os, requests
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
 path = 'assets/leaderbard.json'
+
 
 @app.route('/')
 def index():
@@ -26,23 +26,28 @@ def get_rules():
         data = json.load(f)
     return json.dumps(data)
 
-@app.route('/lb', methods=['GET', 'POST']) # leaderboard
+
+@app.route('/lb', methods=['GET', 'POST'])  # leaderboard
 def lb():
+    print('LB call')
     resList = []
     if not os.path.exists(path):
         with open(path, 'w') as f:
             json.dump([], f)
     if request.method == 'POST':
-        dati  = request.json
-        if dati is not None and len(dati)>0:
+        print('LB post')
+        dati = request.json
+        if dati is not None and len(dati) > 0:
             with open(path, 'r') as f:
                 resList = json.load(f)
                 resList.append(dati)
             with open(path, 'w') as f:
                 json.dump(resList, f, indent=1)
+        print(dati, 'done')
     with open(path, 'r') as f:
         resList = json.load(f)
     return json.dumps(sorted(resList, key=lambda v: v['points'], reverse=True))
+
 
 if __name__ == '__main__':
     app.debug = True

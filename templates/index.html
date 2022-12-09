@@ -157,6 +157,8 @@
 </footer>
 
 <script>
+    fetchLB();
+
     let Time = 0;
     let Timer = null;
     let response;
@@ -180,16 +182,6 @@
                     return i;
                 }
             }
-        }
-    }
-
-    // Used to toggle the menu on small screens when clicking on the menu button
-    function myFunction() {
-        var x = document.getElementById("navDemo");
-        if (x.className.indexOf("w3-show") == -1) {
-            x.className += " w3-show";
-        } else {
-            x.className = x.className.replace(" w3-show", "");
         }
     }
     async function GetWord(letter_count) {
@@ -216,9 +208,10 @@
         return s;                        // Return shuffled string
     }
     function EndGame(){
+        //alert('Game ended!');
         let el = document.getElementById("play");
         let h = document.createElement('h3');
-        h.innerHTML = "Your score is: " + String(SCORE);
+        h.innerHTML = "Your score is: " + SCORE;
         el.appendChild(h);
         form = document.createElement('form')
         form.id = "forma";
@@ -234,8 +227,9 @@
         el.appendChild(form);
     }
     function GenerateLeaderBoard(dati){
-            if(document.getElementById('LB')){
-                document.getElementById('LB').remove();
+            var og_lb = document.getElementById('leaderboard')
+            while (og_lb.lastElementChild){
+                og_lb.removeChild(og_lb.lastElementChild);
             }
             var LB = document.createElement('table');
             LB.id = 'LB'
@@ -258,51 +252,63 @@
                 row.appendChild(d2);
                 LB.appendChild(row);
             }
-            document.body.appendChild(LB);
+            og_lb.appendChild(LB);
         }
-
-        function fetchLB(){
-            let vards=document.getElementById("forma").vards.value;
-            if (!(vards === null || vards === '')){
+    function fetchLB(){
+        el = document.getElementById('forma');
+        if (typeof(el)!='undefined' && el!=null) {
+            let vards = document.getElementById("forma").vards.value;
+            if (!(vards === null || vards === '')) {
                 fetch('http://127.0.0.1:5000/lb', {
                     method: 'POST',
-                    headers: {'Content-Type' : 'application/json'},
-                    body:JSON.stringify({'name' : vards, 'points' : Math.floor(Math.random() * 100)})
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({'name': vards, 'points': Math.floor(Math.random() * 100)})
                 })
-                .then(res => res.json())
-                .then(data => GenerateLeaderBoard(data));
+                    .then(res => res.json())
+                    .then(data => {
+                        GenerateLeaderBoard(data);
+                    });
             } else {
                 fetch('http://127.0.0.1:5000/lb')
-                .then(res => res.json())
-                .then(data => GenerateLeaderBoard(data));
+                    .then(res => res.json())
+                    .then(data => GenerateLeaderBoard(data));
             }
-
+        } else {
+            fetch('http://127.0.0.1:5000/lb')
+                    .then(res => res.json())
+                    .then(data => GenerateLeaderBoard(data));
         }
+    }
     async function EndRound() {
+        console.log('Round ended! Score: ', SCORE, ST)
         let guessed_word = "";
         let el = document.getElementById('row_void');
         for (let x of el.children) {
             guessed_word += x.innerHTML;
         }
         if (guessed_word === word) {
-            SCORE += dati[GetRound(round_numb)];
+            SCORE += dati[GetRound(round_numb)].points;
             SCORE += ST;
             el = document.getElementById("play");
             el.replaceChildren();
             clearInterval(Timer);
             if (round_numb >= ROUND_SUM - 1) {
+                console.log('Game should end, last round.');
                 EndGame();
             } else {
                 round_numb++;
                 await PlayRound(dati[GetRound(round_numb)]['letter_count'], round_numb, dati[GetRound(round_numb)]['time']);
             }
         } else {
-            if (Time === 0) {
+            console.log("Didn't guess the word");
+            if (Time === 1 || Time === 0) {
                 el = document.getElementById("play");
                 el.replaceChildren();
                 clearInterval(Timer);
+                console.log('Game should end, out of time.');
                 EndGame();
             } else {
+                console.log('Got more time', Time);
                 let void_row = document.getElementById("row_void");
                 for (let x of void_row.children) {
                     x.innerHTML = " ";
@@ -310,7 +316,6 @@
             }
         }
     }
-
     async function PlayRound(letter_count, round_numb, time) {
         word = await GetWord(letter_count);
         console.log(word);
@@ -394,6 +399,15 @@
         let start_button = document.getElementById("start");
         start_button.parentNode.removeChild(start_button);
         await PlayRound(dati[0]['letter_count'], round_numb, dati[0]['time']);
+    }
+    // Used to toggle the menu on small screens when clicking on the menu button
+    function myFunction() {
+        var x = document.getElementById("navDemo");
+        if (x.className.indexOf("w3-show") == -1) {
+            x.className += " w3-show";
+        } else {
+            x.className = x.className.replace(" w3-show", "");
+        }
     }
 </script>
 </body>
