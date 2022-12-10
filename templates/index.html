@@ -46,6 +46,7 @@
             cursor: pointer;
             width: 100%;
             font-size: 18px;
+            font-weight: bold;
         }
 
         a {
@@ -215,45 +216,61 @@
         el.appendChild(h);
         form = document.createElement('form')
         form.id = "forma";
+        form.style = "box-sizing: border-box;";
         form.onsubmit="return false";
         let inp = document.createElement('input');
         inp.type="text";
-        inp.name="vards";
+        inp.name="vards"
+        inp.placeholder = "Type your username...";
+        inp.style = "margin: 50px 0; padding: 10px; border: 1px solid #000000; border-radius:10px; width: 25%; font-size: 18px;";
         form.appendChild(inp);
         let butt = document.createElement("button");
         butt.onclick = "fetchLB()";
-        butt.innerHTML = "submit";
+        butt.innerHTML = "Submit";
         form.appendChild(butt);
         el.appendChild(form);
     }
     function GenerateLeaderBoard(dati){
-            var og_lb = document.getElementById('leaderboard')
-            while (og_lb.lastElementChild){
-                og_lb.removeChild(og_lb.lastElementChild);
-            }
-            var LB = document.createElement('table');
-            LB.id = 'LB'
-            //
-            var t1 = document.createElement('tr');
-            h1 = document.createElement('th');
-            h1.innerHTML = 'Username';
-            t1.appendChild(h1);
-            h2 = document.createElement('th');
-            h2.innerHTML = 'Points';
-            t1.appendChild(h2);
-            LB.appendChild(t1);
-            for (x of dati){
-                row = document.createElement('tr');
-                d1 = document.createElement('td');
-                d1.innerHTML = x['name'];
-                row.appendChild(d1);
-                d2 = document.createElement('td');
-                d2.innerHTML = x['points'];
-                row.appendChild(d2);
-                LB.appendChild(row);
-            }
-            og_lb.appendChild(LB);
+        var og_lb = document.getElementById('leaderboard')
+        while (og_lb.lastElementChild){
+            og_lb.removeChild(og_lb.lastElementChild);
         }
+        var LB = document.createElement('table');
+        LB.style = "border-collapse: collapse; width: 50%; border: 1px solid;"
+        LB.id = 'LB'
+        //
+        var tr1 = document.createElement('tr');
+        th1 = document.createElement('th');
+        th1.innerHTML = 'Nr';
+        th1.style = "border: lpx solid #dddddd; text-align: center; padding: 8px; font-size: 18px; border: 1px solid;";
+        tr1.appendChild(th1);
+        th2 = document.createElement('th');
+        th2.innerHTML = 'Username';
+        th2.style = "border: lpx solid #dddddd; text-align: center; padding: 8px; font-size: 18px; border: 1px solid;";
+        tr1.appendChild(th2);
+        th3 = document.createElement('th');
+        th3.innerHTML = 'Points';
+        th3.style = "border: lpx solid #dddddd; text-align: center; padding: 8px; font-size: 18px; border: 1px solid;";
+        tr1.appendChild(th3);
+        LB.appendChild(tr1);
+        for (let i=0;i<dati.length;i++){
+            row = document.createElement('tr');
+            td1 = document.createElement('td');
+            td1.innerHTML = (i+1)+".";
+            td1.style = "border: lpx solid #dddddd; text-align: center; padding: 8px; font-size: 18px; border: 1px solid;";
+            row.appendChild(td1);
+            td2 = document.createElement('td');
+            td2.innerHTML = dati[i]['name'];
+            td2.style = "border: lpx solid #dddddd; text-align: left; padding: 8px; font-size: 18px; border: 1px solid;";
+            row.appendChild(td2);
+            td3 = document.createElement('td');
+            td3.innerHTML = dati[i]['points'];
+            td3.style = "border: lpx solid #dddddd; text-align: center; padding: 8px; font-size: 18px; border: 1px solid;";
+            row.appendChild(td3);
+            LB.appendChild(row);
+        }
+        og_lb.appendChild(LB);
+    }
     function fetchLB(){
         el = document.getElementById('forma');
         if (typeof(el)!='undefined' && el!=null) {
@@ -312,6 +329,7 @@
                 let void_row = document.getElementById("row_void");
                 for (let x of void_row.children) {
                     x.innerHTML = " ";
+                    x.style = "width: 80px; height: 80px; margin: 10px; justify-content: center; background-color: #F2F3F4; border-radius:10px;";
                 }
             }
         }
@@ -326,7 +344,7 @@
         let info = document.createElement('div');
         info.id = "info";
         info.className = "card";
-        info.style = "display: flex; justify-content: center";
+        info.style = "display: grid; place-items: center; border-radius:10px;";
         let timer = document.createElement('h3');
         timer.id = "countdown";
         let h = document.createElement("h3");
@@ -335,10 +353,11 @@
         info.appendChild(timer);
         //
         let row_void = document.createElement('div');
-        row_void.style = "display: flex; justify-content: center";
+        row_void.style = "display: flex; justify-content: center;";
         row_void.id = "row_void";
         for (let i = 0; i < word.length; i++) {
             let letter_card = document.createElement('div');
+            letter_card.style = "width: 80px; height: 80px; margin: 10px; display: grid; place-items: center; background-color: #F2F3F4; border-radius:10px;";
             letter_card.id = "void_" + String(i);
             letter_card.className = "card";
             let letter = document.createElement('h1');
@@ -354,6 +373,7 @@
         word_shuffled = shuffle(word);
         for (let i = 0; i < word_shuffled.length; i++) {
             let letter_card = document.createElement('div');
+            letter_card.style = "width: 80px; height: 80px; margin: 100px; display: grid; place-items: center; border-radius:10px;";
             letter_card.className = "card";
             letter_card.id = "letter_" + String(i);
             let letter = document.createElement('h1');
@@ -362,6 +382,7 @@
             letter_card.onclick = function () {
                 let el = document.getElementById("void_" + String(ind));
                 el.innerHTML = letter.innerHTML;
+                el.style = "width: 80px; height: 80px; margin: 10px; display: grid; place-items: center; background-color: #AEB6BF; color: #FFFFFF; font-size: 42px; border-radius:10px;";
                 ind++;
                 if (ind === letter_count) {
                     EndRound();
