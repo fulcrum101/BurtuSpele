@@ -10,14 +10,6 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/get_word', methods=['GET'])
-def get_word():
-    length = request.args.to_dict()['length']
-    params = {'length': length,
-              'words': 1}
-    response = requests.get('https://random-word-api.vercel.app/api', params=params)
-    return json.dumps(response.text)
-
 
 @app.route('/get_rules')
 def get_rules():
