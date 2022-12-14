@@ -110,8 +110,7 @@
             – 90 sekundes un 7 burti – 120 sekundes. Maksimāli spēle ilgs 615 sekundes jeb 10 minūtes un 15 sekundes (ir
             arī iespēja pabeigt spēli ātrāk).
         </li>
-        <li>Par katru pareizi uzminēto burtu Jūs dabūsiet 1 punktu, par uzminētu vārdu, kurš sastāv no 4 burtiem tiks
-            piešķirti 5 punkti, par vārdu no 5 burtiem – 7,5 punkti, par vārdu no 6 burtiem – 10 punkti un par vārdu no
+        <li>Par uzminētu vārdu, kurš sastāv no 4 burtiem tiks piešķirti 5 punkti, par vārdu no 5 burtiem – 7,5 punkti, par vārdu no 6 burtiem – 10 punkti un par vārdu no
             7 burtiem – 15 punkti. Jums arī tiks piešķirti papildus 0,25 punkti par katru neizlietotu sekundi.
         </li>
         <li>Spēles beigās ir iespējams saglābāt savu rezultātu un ielikt to kopējā rezultātu tabulā, kura ir redzama
@@ -217,7 +216,6 @@
         form = document.createElement('form')
         form.id = "forma";
         form.style = "box-sizing: border-box;";
-        form.onsubmit="return false";
         let inp = document.createElement('input');
         inp.type="text";
         inp.name="vards"
@@ -225,7 +223,7 @@
         inp.style = "margin: 50px 0; padding: 10px; border: 1px solid #000000; border-radius:10px; width: 25%; font-size: 18px;";
         form.appendChild(inp);
         let butt = document.createElement("button");
-        butt.onclick = "fetchLB()";
+        butt.onclick = fetchLB;
         butt.innerHTML = "Submit";
         form.appendChild(butt);
         el.appendChild(form);
@@ -276,10 +274,11 @@
         if (typeof(el)!='undefined' && el!=null) {
             let vards = document.getElementById("forma").vards.value;
             if (!(vards === null || vards === '')) {
+                console.log(vards);
                 fetch('http://127.0.0.1:5000/lb', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({'name': vards, 'points': Math.floor(Math.random() * 100)})
+                    body: JSON.stringify({'name': vards, 'points': SCORE})
                 })
                     .then(res => res.json())
                     .then(data => {

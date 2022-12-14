@@ -44,6 +44,8 @@ def lb():
             with open(path, 'w') as f:
                 json.dump(resList, f, indent=1)
         print(dati, 'done')
+    else:
+        print('LB get')
     with open(path, 'r') as f:
         resList = json.load(f)
     return json.dumps(sorted(resList, key=lambda v: v['points'], reverse=True))
