@@ -185,7 +185,7 @@
         }
     }
     async function GetWord(letter_count) {
-        await fetch('http://127.0.0.1:5000/get_word?length=' + String(letter_count))
+        await fetch('https://random-word-api.vercel.app/api?length='+String(letter_count)+'&words=1')
             .then(response => response.json())
             .then(dati => {
                 word = eval(dati)[0];
